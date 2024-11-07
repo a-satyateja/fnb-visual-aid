@@ -1,0 +1,12 @@
+.Menu_Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+}
+.Menu_Header_Text {
+  font-weight: bold;
+}
+.Divider {
+  background-color: #87ceeb;
+}

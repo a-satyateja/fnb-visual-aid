@@ -1,0 +1,35 @@
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.Item_Box {
+  background-color: rgba(110, 184, 249, 0.2);
+  border-radius: 4px;
+}
+
+.List_Content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 5px;
+}
+
+.List_Item {
+  padding: 0px;
+  margin: 0px;
+}
+.Button_Reduce {
+  background-color: "#1976D380";
+}
+
+.Price_Checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: bold;
+  margin-block-end: auto;
+}
+/* Add media query for small screens (phones) */
