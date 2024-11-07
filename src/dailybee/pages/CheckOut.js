@@ -30,6 +30,7 @@ const CheckOut = () => {
         <Box sx={{ margin: "20px 30px" }}>
           {totalItems.length > 0 ? (
             totalItems.map((item, id) => {
+              console.log(totalItems);
               return (
                 <Box key={id}>
                   <CheckOutItemCard
@@ -38,7 +39,6 @@ const CheckOut = () => {
                     item={item[3]}
                     price={item[1]}
                     number={item[4]}
-                    // initialNumber={item[5]}
                   />
                 </Box>
               );

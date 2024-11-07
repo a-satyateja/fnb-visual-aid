@@ -52,7 +52,7 @@ export default function EditCustomisePopup({
   const [number, setNumber] = useState(1);
   const [count, setCount] = useState(0);
   const [isMinSelectionMet, setIsMinSelectionMet] = useState(true);
-  // console.log(checked, "checked");
+
   // Function to initialize checkbox states based on newData[5]
   useEffect(() => {
     setChecked(selectedOption);

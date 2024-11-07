@@ -45,7 +45,7 @@ export default function CustomisePopup({
   selectedPizza,
   price,
 }) {
-  const { items, newData, setTotalItems } = useContext(DataContext);
+  const { items, newData, totalItems, setTotalItems } = useContext(DataContext);
   const [checked, setChecked] = useState([]);
   const [number, setNumber] = useState(1);
   const [count, setCount] = useState(0);
@@ -82,8 +82,7 @@ export default function CustomisePopup({
   const handleSubmit = () => {
     let selectedItems = [];
     const totalItemCost =
-      price < count * number ? count : Number(price) + count;
-
+      price < count ? count * number : Number(price) + count;
     let selectionsArray = checked.map((categoryChecked) => [
       ...categoryChecked,
     ]);
@@ -107,7 +106,6 @@ export default function CustomisePopup({
           item[0] === selectedPizza &&
           JSON.stringify(item[3]) === JSON.stringify(selectionsArray) // Compare customizations
       );
-
       if (existingItemIndex !== -1) {
         // If the item exists, increase the quantity (index 4 holds quantity)
         prevItems[existingItemIndex][4] += number; // Add new quantity to the existing one
@@ -120,10 +118,9 @@ export default function CustomisePopup({
           : [selectedItems];
       }
     });
-
     setOpen(false); // Close the modal after submission
   };
-
+  console.log("totalItems", totalItems);
   const handleToggle = (categoryIndex, value, maxSelection) => () => {
     const currentCategoryChecked = checked[categoryIndex] || [];
     const currentIndex = currentCategoryChecked.indexOf(value);
