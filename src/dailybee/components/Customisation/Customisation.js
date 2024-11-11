@@ -51,7 +51,6 @@ export default function CustomisePopup({
   const [count, setCount] = useState(0);
   const [isMinSelectionMet, setIsMinSelectionMet] = useState(true);
 
-  // Function to initialize checkbox states based on newData[5]
   useEffect(() => {
     if (open && newData) {
       const initialCheckedState = [];
@@ -59,22 +58,18 @@ export default function CustomisePopup({
       newData
         .filter((value) => value && value[0] === selectedPizza)
         .forEach((value, index) => {
-          // Check if newData[5] contains any preselected customization values
           const preselected = value[5] ? value[5].split(",") : [];
           const categoryChecked = [];
 
           value[2]?.forEach((item) => {
-            // If the customization is in newData[5], mark the checkbox as checked
             if (preselected.includes(item[0])) {
               categoryChecked.push(item);
             }
           });
 
-          // Save the checked values for this category
           initialCheckedState[index] = categoryChecked;
         });
 
-      // Set the checked state with the initial values
       setChecked(initialCheckedState);
     }
   }, [open, newData, selectedPizza]);
@@ -98,27 +93,23 @@ export default function CustomisePopup({
     selectedItems.push(selectionsArray);
     selectedItems.push(number);
 
-    // Check if the selected item already exists in totalItems
     setTotalItems((prevItems) => {
-      // Find if the selected pizza and customization already exist
       const existingItemIndex = prevItems.findIndex(
         (item) =>
           item[0] === selectedPizza &&
-          JSON.stringify(item[3]) === JSON.stringify(selectionsArray) // Compare customizations
+          JSON.stringify(item[3]) === JSON.stringify(selectionsArray)
       );
       if (existingItemIndex !== -1) {
-        // If the item exists, increase the quantity (index 4 holds quantity)
-        prevItems[existingItemIndex][4] += number; // Add new quantity to the existing one
+        prevItems[existingItemIndex][4] += number;
         prevItems[existingItemIndex][1] += totalItemCost;
-        return [...prevItems]; // Return the updated list
+        return [...prevItems];
       } else {
-        // If the item doesn't exist, add the new selected item
         return Array.isArray(prevItems)
           ? [...prevItems, selectedItems]
           : [selectedItems];
       }
     });
-    setOpen(false); // Close the modal after submission
+    setOpen(false);
   };
   console.log("totalItems", totalItems);
   const handleToggle = (categoryIndex, value, maxSelection) => () => {
@@ -152,7 +143,6 @@ export default function CustomisePopup({
   const sumCount = useCallback(() => {
     let sum = 0;
 
-    // Ensure checked is an array before calling forEach
     if (Array.isArray(checked)) {
       checked.forEach((categoryChecked) => {
         if (Array.isArray(categoryChecked)) {
@@ -180,14 +170,12 @@ export default function CustomisePopup({
     setNumber(number + 1);
   };
 
-  // Check if minimum selection requirements are met
   useEffect(() => {
     let isMinSelectionReached = true;
 
     if (Array.isArray(newData)) {
       newData
         .filter((value) => {
-          // console.log("Checking value:", value); // Log each entry of newData
           return (
             value &&
             Array.isArray(value) &&
@@ -196,24 +184,17 @@ export default function CustomisePopup({
           );
         })
         .forEach((value, index) => {
-          // console.log("Filtered value:", value); // Log after filtering
-
-          // Ensure value[2] is an array before processing
           if (Array.isArray(value[2])) {
             const minSelection = parseInt(value[3], 10);
             const currentChecked = checked[index] || [];
-            // console.log("Current checked:", currentChecked);
 
-            // Allow 0 minimum selections, ensure the condition only breaks if min > 0
             if (minSelection > 0 && currentChecked.length < minSelection) {
               isMinSelectionReached = false;
             }
           } else {
-            // console.warn("value[2] is not an array:", value[2]);
           }
         });
     } else {
-      // console.warn("newData is not an array or is undefined");
     }
 
     setIsMinSelectionMet(isMinSelectionReached);
@@ -323,10 +304,10 @@ export default function CustomisePopup({
               >
                 <Button
                   sx={{
-                    minWidth: "30px", // Reduce button width
-                    padding: "0 4px", // Compact button padding
+                    minWidth: "30px",
+                    padding: "0 4px",
                     fontSize: "12px",
-                    cursor: "pointer", // Smaller font size
+                    cursor: "pointer",
                   }}
                   onClick={handleCountDecrease}
                 >
@@ -339,10 +320,10 @@ export default function CustomisePopup({
                 </Typography>
                 <Button
                   sx={{
-                    minWidth: "30px", // Reduce button width
-                    padding: "0 4px", // Compact button padding
+                    minWidth: "30px",
+                    padding: "0 4px",
                     fontSize: "12px",
-                    cursor: "pointer", // Smaller font size
+                    cursor: "pointer",
                   }}
                   onClick={handleCountIncrease}
                 >

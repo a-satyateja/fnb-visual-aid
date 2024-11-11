@@ -14,22 +14,22 @@ const CheckOutBar = () => {
   return (
     <Button
       sx={{
-        position: "fixed", // Sticks to the bottom of the viewport
-        bottom: 0, // Aligns at the bottom
-        left: "50%", // Moves to the horizontal center
-        transform: "translateX(-50%)", // Ensures perfect centering
-        width: "100%", // Full width for small screens
-        maxWidth: { xs: "100%", sm: "640px" }, // Limit width on larger screens
-        height: "50px", // Adjust height as needed
-        backgroundColor: "#1976D2", // Background color
-        color: "white", // Text color
-        display: "flex", // Flexbox layout
-        justifyContent: "space-between", // Space between items
-        alignItems: "center", // Center content vertically
-        fontSize: "18px", // Adjust font size
-        boxShadow: "0px -2px 10px rgba(0, 0, 0, 0.2)", // Optional shadow for elevation
-        cursor: "pointer", // Pointer cursor
-        textTransform: "none", // Remove uppercase transformation
+        position: "fixed",
+        bottom: 0,
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "100%",
+        maxWidth: { xs: "100%", sm: "640px" },
+        height: "50px",
+        backgroundColor: "#1976D2",
+        color: "white",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        fontSize: "18px",
+        boxShadow: "0px -2px 10px rgba(0, 0, 0, 0.2)",
+        cursor: "pointer",
+        textTransform: "none",
         padding: "0 16px",
       }}
       onClick={handleSubmit}

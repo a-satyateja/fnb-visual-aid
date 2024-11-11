@@ -13,7 +13,6 @@ import ItemCard from "../ItemCard/ItemCard";
 const MenuItems = () => {
   const { data, items } = useContext(DataContext);
 
-  // Store expanded states for all items, initializing all to true (expanded)
   const [expandedItems, setExpandedItems] = useState(
     data.slice(1).map((_, index) => index)
   );

@@ -48,9 +48,9 @@ const ItemCard = ({ data, items, selectedItem, mrp, sellingprice, icon }) => {
 
   const capitalizeFirstLetter = (str) => {
     return str
-      .split(" ") // Split the string by spaces into an array of words
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize first letter of each word
-      .join(" "); // Join the words back into a string
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
   };
   return (
     <div>

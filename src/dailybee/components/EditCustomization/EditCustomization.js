@@ -53,14 +53,13 @@ export default function EditCustomisePopup({
   const [count, setCount] = useState(0);
   const [isMinSelectionMet, setIsMinSelectionMet] = useState(true);
 
-  // Function to initialize checkbox states based on newData[5]
   useEffect(() => {
     setChecked(selectedOption);
   }, [open, newData, selectedPizza]);
 
   const handleSubmit = () => {
     let selectedItems = [];
-    const totalItemCost = count * number; // Directly use the new count instead of adding to the existing price
+    const totalItemCost = count * number;
 
     let selectionsArray = checked.map((categoryChecked) => [
       ...categoryChecked,
@@ -77,30 +76,25 @@ export default function EditCustomisePopup({
     selectedItems.push(selectionsArray);
     selectedItems.push(number);
 
-    // Replace the existing selected items in totalItems instead of pushing
     setTotalItems((prevItems) => {
-      // Find the index of the existing pizza in totalItems
       const existingItemIndex = prevItems.findIndex(
         (item) => item[0] === selectedPizza
       );
 
       if (existingItemIndex !== -1) {
-        // Replace the existing customization with the new one
         const updatedItems = [...prevItems];
-        updatedItems[existingItemIndex][3] = selectionsArray; // Replace the customizations (index 3 is where customizations are stored)
-        updatedItems[existingItemIndex][1] = totalItemCost * fnumber; // Update the total cost with the new selection
-        // updatedItems[existingItemIndex][4] = number; // Update the quantity
+        updatedItems[existingItemIndex][3] = selectionsArray;
+        updatedItems[existingItemIndex][1] = totalItemCost * fnumber;
 
-        return updatedItems; // Return the updated array
+        return updatedItems;
       } else {
-        // If the item doesn't exist, add the new selected item
         return Array.isArray(prevItems)
           ? [...prevItems, selectedItems]
           : [selectedItems];
       }
     });
 
-    setOpen(false); // Close the modal after submission
+    setOpen(false);
   };
 
   const handleToggle = (categoryIndex, value, maxSelection) => () => {
@@ -134,7 +128,6 @@ export default function EditCustomisePopup({
   const sumCount = useCallback(() => {
     let sum = 0;
 
-    // Ensure checked is an array before calling forEach
     if (Array.isArray(checked)) {
       checked.forEach((categoryChecked) => {
         if (Array.isArray(categoryChecked)) {
@@ -152,14 +145,12 @@ export default function EditCustomisePopup({
     sumCount();
   }, [checked, sumCount]);
 
-  // Check if minimum selection requirements are met
   useEffect(() => {
     let isMinSelectionReached = true;
 
     if (Array.isArray(newData)) {
       newData
         .filter((value) => {
-          // console.log("Checking value:", value); // Log each entry of newData
           return (
             value &&
             Array.isArray(value) &&
@@ -168,24 +159,17 @@ export default function EditCustomisePopup({
           );
         })
         .forEach((value, index) => {
-          // console.log("Filtered value:", value); // Log after filtering
-
-          // Ensure value[2] is an array before processing
           if (Array.isArray(value[2])) {
             const minSelection = parseInt(value[3], 10);
             const currentChecked = checked[index] || [];
-            // console.log("Current checked:", currentChecked);
 
-            // Allow 0 minimum selections, ensure the condition only breaks if min > 0
             if (minSelection > 0 && currentChecked.length < minSelection) {
               isMinSelectionReached = false;
             }
           } else {
-            // console.warn("value[2] is not an array:", value[2]);
           }
         });
     } else {
-      // console.warn("newData is not an array or is undefined");
     }
 
     setIsMinSelectionMet(isMinSelectionReached);

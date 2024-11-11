@@ -1,6 +1,5 @@
 import { Box, Button, Divider } from "@mui/material";
 import React, { useContext } from "react";
-// import { DataContext } from "../context/DataContext";
 import MenuComp from "../components/Menu/Menu";
 import MenuItems from "../components/MenuItems/MenuItems";
 import { DataContext } from "../context/DataContext";

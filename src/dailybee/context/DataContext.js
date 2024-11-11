@@ -1,10 +1,8 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
 
-// Create a context
 export const DataContext = createContext();
 
-// Create a provider component
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [items, setItems] = useState([]);
@@ -16,7 +14,6 @@ export const DataProvider = ({ children }) => {
   const [finalPrice, setFinalPrice] = useState(0);
   const [erros, setErrors] = useState("");
 
-  // const sheetId = "1iC0nW5yPGb_bXe13TTHjcy85YeWnq9flfe9L7V7L07c"; // Replace with your Google Sheet ID
   const API_KEY = "AIzaSyDfGH9fno8N1KWLN9-Jhqm-zULjpAAm58w"; // Replace with your API Key
   const MENU_RANGE = "menus!A:E"; // Replace with the sheet name and range you want to fetch
   const ITEMS_RANGE = "items!A:P";
@@ -95,9 +92,9 @@ export const DataProvider = ({ children }) => {
 
           customizations.slice(1).forEach((custom) => {
             if (custom[0] === it.trim()) {
-              arr2[0] = it.trim(); // Customization name (or id)
-              arr2[1] = custom[5] || ""; // Price or value (ensure custom[5] exists)
-              arr2[2] = e[4] || ""; // Additional values like rank, etc.
+              arr2[0] = it.trim();
+              arr2[1] = custom[5] || "";
+              arr2[2] = e[4] || "";
             }
           });
           if (arr2.length > 0) {

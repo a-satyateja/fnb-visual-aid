@@ -1,13 +1,30 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Input } from "@mui/material";
 import "./MainPage.css";
 import { DataContext } from "../../context/DataContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const MainPage = () => {
   const { setSheetId } = useContext(DataContext);
   const [inputData, setInputData] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Function to extract sheetId from the query parameter
+  const getSheetIdFromUrl = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get("id");
+  };
+
+  // Automatically load when a sheetId is present in the URL
+  useEffect(() => {
+    const sheetId = getSheetIdFromUrl();
+    if (sheetId) {
+      localStorage.setItem("sheetId", sheetId);
+      setSheetId(sheetId);
+      navigate("/home");
+    }
+  }, [location]);
 
   const handleInputChange = (event) => {
     setInputData(event.target.value);
@@ -18,18 +35,15 @@ const MainPage = () => {
     const match = url.match(regex);
     return match ? match[1] : null;
   };
+
   const handleSubmit = () => {
     const extractedId = extractSheetId(inputData);
     if (extractedId) {
-      // Store the sheet ID in localStorage
       localStorage.setItem("sheetId", extractedId);
-
-      // Set the sheet ID in the context
       setSheetId(extractedId);
       navigate("/home");
       setInputData("");
     } else {
-      // Handle invalid input case (optional)
       alert("Please enter a valid Excel link.");
     }
   };
