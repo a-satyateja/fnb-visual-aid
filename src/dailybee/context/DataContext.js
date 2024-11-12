@@ -8,21 +8,30 @@ export const DataProvider = ({ children }) => {
   const [items, setItems] = useState([]);
   const [customizations, setCustomizations] = useState([]);
   const [group, setGroup] = useState([]);
-  const [newData] = useState([]);
+  const [newData, setNewData] = useState([]); // Changed from useState([]) to useState to be able to modify newData
   const [totalItems, setTotalItems] = useState([]);
   const [sheetId, setSheetId] = useState("");
   const [finalPrice, setFinalPrice] = useState(0);
-  const [erros, setErrors] = useState("");
+  const [errors, setErrors] = useState([]);
 
-  const API_KEY = "AIzaSyDfGH9fno8N1KWLN9-Jhqm-zULjpAAm58w"; // Replace with your API Key
-  const MENU_RANGE = "menus!A:E"; // Replace with the sheet name and range you want to fetch
+  const API_KEY = "AIzaSyDfGH9fno8N1KWLN9-Jhqm-zULjpAAm58w";
+  const MENU_RANGE = "menus!A:E";
   const ITEMS_RANGE = "items!A:P";
-  const CUTOMIZATIONS_RANGE = "customizations!A:I";
+  const CUSTOMIZATIONS_RANGE = "customizations!A:I";
   const CUSTOM_GROUP_RANGE = "custom_group_mapping!A:H";
+
+  const addError = (error, requestType) => {
+    setErrors((prevErrors) => [
+      ...prevErrors,
+      { requestType, message: error.message },
+    ]);
+  };
+
+  console.log("error::", errors);
 
   useEffect(() => {
     if (sheetId === "") return;
-    //fetching menu
+
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -31,12 +40,11 @@ export const DataProvider = ({ children }) => {
         setData(response.data.values);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setErrors(error);
+        addError(error, "Menu Data Fetch");
       }
     };
     fetchData();
 
-    //fetching items
     const fetchItems = async () => {
       try {
         const response = await axios.get(
@@ -44,27 +52,25 @@ export const DataProvider = ({ children }) => {
         );
         setItems(response.data.values);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setErrors(error);
+        console.error("Error fetching items:", error);
+        addError(error, "Items Data Fetch");
       }
     };
     fetchItems();
 
-    //fetching customizations
     const fetchCustomizations = async () => {
       try {
         const response = await axios.get(
-          `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${CUTOMIZATIONS_RANGE}?key=${API_KEY}`
+          `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${CUSTOMIZATIONS_RANGE}?key=${API_KEY}`
         );
         setCustomizations(response.data.values);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setErrors(error);
+        console.error("Error fetching customizations:", error);
+        addError(error, "Customizations Data Fetch");
       }
     };
     fetchCustomizations();
 
-    //fetching custom groups
     const fetchCustomGroups = async () => {
       try {
         const response = await axios.get(
@@ -72,15 +78,16 @@ export const DataProvider = ({ children }) => {
         );
         setGroup(response.data.values);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        setErrors(error);
+        console.error("Error fetching custom groups:", error);
+        addError(error, "Custom Groups Data Fetch");
       }
     };
     fetchCustomGroups();
   }, [sheetId]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const groupCustomise = () => {
+      const updatedData = [];
       group.slice(1).forEach((e) => {
         let arr = [];
         arr.push(e[0]);
@@ -105,15 +112,15 @@ export const DataProvider = ({ children }) => {
         arr.push(e[3]);
 
         if (arr3.length > 0) {
-          newData.push(arr);
+          updatedData.push(arr);
         }
       });
+      setNewData(updatedData); // Update the state directly
     };
     groupCustomise();
   }, [group, customizations]);
 
   useEffect(() => {
-    // console.log(totalItems);
     const updatedFinalPrice = totalItems.reduce(
       (acc, item) => acc + item[1],
       0
@@ -135,6 +142,8 @@ export const DataProvider = ({ children }) => {
         sheetId,
         finalPrice,
         setFinalPrice,
+        errors,
+        setErrors,
       }}
     >
       {children}

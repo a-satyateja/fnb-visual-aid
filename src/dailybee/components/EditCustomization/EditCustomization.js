@@ -13,7 +13,7 @@ import Divider from "@mui/material/Divider";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { DataContext } from "../../context/DataContext";
-import { Button, ButtonGroup } from "@mui/material";
+import { Button } from "@mui/material";
 
 const VegIcon = () => (
   <Box
@@ -32,7 +32,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 420,
+  width: 350,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -47,15 +47,15 @@ export default function EditCustomisePopup({
   selectedOption,
   fnumber,
 }) {
-  const { items, newData, setTotalItems, totalItems } = useContext(DataContext);
+  const { items, newData, setTotalItems } = useContext(DataContext);
   const [checked, setChecked] = useState([]);
-  const [number, setNumber] = useState(1);
+  const [number] = useState(1);
   const [count, setCount] = useState(0);
   const [isMinSelectionMet, setIsMinSelectionMet] = useState(true);
 
   useEffect(() => {
     setChecked(selectedOption);
-  }, [open, newData, selectedPizza]);
+  }, [open, newData, selectedPizza, selectedOption]);
 
   const handleSubmit = () => {
     let selectedItems = [];

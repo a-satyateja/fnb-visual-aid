@@ -13,8 +13,21 @@ const CheckOut = () => {
     navigate("/home");
   };
   return (
-    <Box sx={{ width: { xs: "100%", sm: "600px" } }}>
-      <Box>
+    <Box
+      sx={{
+        width: {
+          xs: "100%",
+          sm: "100%",
+        },
+        display: {
+          sm: "flex",
+        },
+        justifyContent: {
+          sm: "center",
+        },
+      }}
+    >
+      <Box sx={{ width: { sm: "700px" } }}>
         <Button
           sx={{ marginTop: "10px", cursor: "pointer" }}
           onClick={submitBack}
