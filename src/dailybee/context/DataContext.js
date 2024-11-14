@@ -8,7 +8,7 @@ export const DataProvider = ({ children }) => {
   const [items, setItems] = useState([]);
   const [customizations, setCustomizations] = useState([]);
   const [group, setGroup] = useState([]);
-  const [newData, setNewData] = useState([]); // Changed from useState([]) to useState to be able to modify newData
+  const [newData, setNewData] = useState([]);
   const [totalItems, setTotalItems] = useState([]);
   const [sheetId, setSheetId] = useState("");
   const [finalPrice, setFinalPrice] = useState(0);
